@@ -7,6 +7,7 @@ const COLORS = {
 
 Chart.defaults.color = '#6B7FA0';
 Chart.defaults.font.family = "'JetBrains Mono', 'Noto Sans KR', sans-serif";
+Chart.defaults.font.size = 12; // 기본 폰트 크기 상향
 
 // ── RMSE Progress (horizontal) ─────────────────────
 new Chart(document.getElementById('rmseChart'), {
@@ -31,8 +32,8 @@ new Chart(document.getElementById('rmseChart'), {
       datalabels: { display: false }
     },
     scales: {
-      y: { grid: { color: 'rgba(30,45,69,0.8)' }, ticks: { font: { size: 10 } }, title: { display: true, text: 'RMSE', color: COLORS.muted } },
-      x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+      y: { grid: { color: 'rgba(30,45,69,0.8)' }, ticks: { font: { size: 11, weight: 'bold' } }, title: { display: true, text: 'RMSE', color: COLORS.muted, font: { size: 12, weight: 'bold' } } },
+      x: { grid: { display: false }, ticks: { font: { size: 11, weight: 'bold' } } }
     },
     animation: { duration: 1200, easing: 'easeOutQuart' }
   }
@@ -63,8 +64,8 @@ new Chart(document.getElementById('rmseChart'), {
     options:{
       plugins:{ legend:{display:false} },
       scales:{
-        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted}},
-        x:{grid:{display:false},ticks:{maxTicksLimit:5,font:{size:9}}}
+        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font: {size:12, weight:'bold'}}, ticks: {font: {size:11}}},
+        x:{grid:{display:false},ticks:{maxTicksLimit:5,font:{size:11, weight:'bold'}}}
       },
       animation:{duration:800}
     }
@@ -103,11 +104,15 @@ new Chart(document.getElementById('featureImportanceChart'), {
     indexAxis:'y',
     plugins:{
       legend:{display:false},
-      tooltip:{callbacks:{label: ctx => `중요도: ${(ctx.raw*100).toFixed(1)}%`}}
+      tooltip:{
+        bodyFont: { size: 13 },
+        titleFont: { size: 13 },
+        callbacks:{label: ctx => `중요도: ${(ctx.raw*100).toFixed(1)}%`}
+      }
     },
     scales:{
-      x:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:9}}},
-      y:{grid:{display:false},ticks:{font:{size:9},color: (ctx)=>{
+      x:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:11, weight:'bold'}}},
+      y:{grid:{display:false},ticks:{font:{size:11, weight:'bold'},color: (ctx)=>{
         const i=ctx.index;
         if(i<4) return COLORS.orange;
         if(i<5) return COLORS.blue;
@@ -142,10 +147,10 @@ new Chart(document.getElementById('featureImportanceChart'), {
       ]
     },
     options:{
-      plugins:{legend:{position:'top',labels:{font:{size:9},boxWidth:12}}}, 
+      plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12}}}, 
       scales:{
-        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'RMSE',color:COLORS.muted},ticks:{font:{size:9}}},
-        x:{grid:{display:false},ticks:{maxTicksLimit:6,font:{size:9}}}
+        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'RMSE',color:COLORS.muted, font: {size:12, weight:'bold'}},ticks:{font:{size:11}}},
+        x:{grid:{display:false},ticks:{maxTicksLimit:6,font:{size:11, weight:'bold'}}}
       },
       animation:{duration:1000}
     }
@@ -189,10 +194,10 @@ new Chart(document.getElementById('featureImportanceChart'), {
     },
     options:{
       indexAxis:'y',
-      plugins:{legend:{position:'top',labels:{font:{size:9},boxWidth:12,padding:12}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12,padding:12}}},
       scales:{
-        x:{stacked:true,grid:{color:'rgba(30,45,69,0.6)'},ticks:{font:{size:9}},title:{display:true,text:'파티션 수',color:COLORS.muted}},
-        y:{stacked:true,grid:{display:false},ticks:{font:{size:9}}}
+        x:{stacked:true,grid:{color:'rgba(30,45,69,0.6)'},ticks:{font:{size:11, weight:'bold'}},title:{display:true,text:'파티션 수',color:COLORS.muted, font:{size:12, weight:'bold'}}},
+        y:{stacked:true,grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
       },
       animation:{duration:800}
     }
@@ -215,10 +220,10 @@ new Chart(document.getElementById('featureImportanceChart'), {
        pointRadius:0,fill:false,showLine:true}
     ]},
     options:{
-      plugins:{legend:{position:'top',labels:{font:{size:9},boxWidth:12}}}, 
+      plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12}}}, 
       scales:{
-        x:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'실제 칼로리',color:COLORS.muted},ticks:{font:{size:9}}},
-        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'예측 칼로리',color:COLORS.muted},ticks:{font:{size:9}}}
+        x:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'실제 칼로리',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11, weight:'bold'}}},
+        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'예측 칼로리',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11, weight:'bold'}}}
       },
       animation:{duration:900}
     }
@@ -245,8 +250,8 @@ new Chart(document.getElementById('featureImportanceChart'), {
     options:{
       plugins:{legend:{display:false}},
       scales:{
-        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted},ticks:{font:{size:9}}},
-        x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:9}}}
+        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11}}},
+        x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:11, weight:'bold'}}}
       },
       annotation:{annotations:{line:{type:'line',x:'0.000',borderColor:COLORS.red,borderWidth:2,borderDash:[5,5]}}},
       animation:{duration:900}
@@ -270,11 +275,14 @@ new Chart(document.getElementById('rmseCompareChart'),{
   },
   options:{
     plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:ctx=>`RMSE: ${ctx.raw}`}}
+      tooltip:{
+        bodyFont: { size: 13 },
+        callbacks:{label:ctx=>`RMSE: ${ctx.raw}`}
+      }
     },
     scales:{
-      y:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:9}}},
-      x:{grid:{display:false},ticks:{font:{size:9}}}
+      y:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:11, weight:'bold'}}},
+      x:{grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
     },
     animation:{duration:1000}
   }
@@ -294,8 +302,11 @@ new Chart(document.getElementById('accuracyChart'),{
   },
   options:{
     cutout:'65%',
-    plugins:{legend:{position:'bottom',labels:{font:{size:9},boxWidth:12,padding:12}},
-      tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.raw}%`}}
+    plugins:{legend:{position:'bottom',labels:{font:{size:12, weight:'bold'},boxWidth:12,padding:12}},
+      tooltip:{
+        bodyFont: { size: 13 },
+        callbacks:{label:ctx=>`${ctx.label}: ${ctx.raw}%`}
+      }
     },
     animation:{duration:1200,animateRotate:true}
   }
