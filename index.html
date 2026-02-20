@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calories Burned 예측 — RMSE 0.064 달성</title>
+<title>Calories Burned 예측 — RMSE 0.0626 달성</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -24,13 +24,8 @@
 <!-- ─── HERO ─────────────────────────────────────── -->
 <div class="page">
 <section id="hero" class="reveal-up">
-  <div class="hero-tag" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-radius: 12px; padding: 0.6rem 1.2rem;">
-    <div style="display: flex; align-items: center; gap: 0.5rem;">
-      [초격차] AI 헬스케어 머신러닝 트랙: 칼로리 소모량 예측 AI 해커톤
-    </div>
-    <div style="font-size: 0.72rem; color: var(--muted2); padding-left: 1.1rem;">
-      알고리즘 | 정형 | 회귀 | 헬스 | RMSE
-    </div>
+  <div class="hero-tag">
+    [초격차] AI 헬스케어 머신러닝 트랙: 칼로리 소모량 예측 AI 해커톤 · 알고리즘 | 정형 | 회귀 | 헬스 | RMSE
   </div>
   <h1 class="fade-in delay-1">
     <span class="accent">칼로리 소모량</span> 예측<br>
@@ -39,11 +34,11 @@
   <p class="hero-desc fade-in delay-2">
     Keytel 생리학 공식의 역공학으로 도메인 지식을 추출하고,<br>
     4개 모델(ExtraTrees · XGBoost · LightGBM · CatBoost) 앙상블로<br>
-    RMSE <strong style="color:var(--green)">0.0644</strong> · R² <strong style="color:var(--blue)">0.99999+</strong> 달성
+    RMSE <strong style="color:var(--green)">0.0626</strong> · R² <strong style="color:var(--blue)">0.99999+</strong> 달성
   </p>
   <div class="metric-chips fade-in delay-3">
     <div class="chip green">
-      <span class="chip-val">0.0644</span>
+      <span class="chip-val">0.0626</span>
       <span class="chip-label">Final RMSE</span>
     </div>
     <div class="chip blue">
@@ -51,11 +46,11 @@
       <span class="chip-label">R² Score</span>
     </div>
     <div class="chip purple">
-      <span class="chip-val">99.9%+</span>
+      <span class="chip-val">99.55%</span>
       <span class="chip-label">반올림 정확도</span>
     </div>
     <div class="chip orange">
-      <span class="chip-val">4.5×</span>
+      <span class="chip-val">4.6×</span>
       <span class="chip-label">RMSE 개선 배율</span>
     </div>
   </div>
@@ -80,14 +75,14 @@
         <tr>
           <td><span class="badge-sm blue">STEP 2</span></td>
           <td>ExtraTrees 잔차 보정 (fp_frac 핵심 피처)</td>
-          <td class="mono" style="color:var(--blue)">0.0644</td>
+          <td class="mono" style="color:var(--blue)">0.0642</td>
           <td class="mono">~3분</td>
           <td>4.5× 개선</td>
         </tr>
         <tr class="highlight-row">
           <td><span class="badge-sm green">FINAL</span></td>
-          <td>4모델 앙상블 + Optuna 튜닝 + Nelder-Mead 가중치 최적화</td>
-          <td class="mono" style="color:var(--green)">0.0644</td>
+          <td>4모델 앙상블 + Optuna 튜닝 + 가중치 최적화</td>
+          <td class="mono" style="color:var(--green)">0.0626</td>
           <td class="mono">~15분</td>
           <td>🏆 최종 제출</td>
         </tr>
@@ -139,13 +134,13 @@
       <div class="icon">🌲</div>
       <h4>4모델<br>앙상블</h4>
       <p>ET+XGB+LGB+CAT<br>5-Fold OOF<br>잔차 보정</p>
-      <div class="rmse-badge" style="color:var(--blue)">RMSE 0.0644</div>
+      <div class="rmse-badge" style="color:var(--blue)">RMSE 0.0626</div>
     </div>
     <div class="pipe-arrow">→</div>
     <div class="pipe-node highlight fade-in delay-6">
       <div class="icon">🏆</div>
       <h4>최종 예측</h4>
-      <p>Nelder-Mead<br>가중치 최적화<br>정수 반올림</p>
+      <p>가중치 최적화<br>Nelder-Mead<br>정수 반올림</p>
       <div class="rmse-badge">🥇 제출</div>
     </div>
   </div>
@@ -264,7 +259,7 @@
     <h4>💡 핵심 발견: 잔차가 모두 ±0.55 이내</h4>
     <p>Keytel 공식이 데이터 생성에 사용되었으며, 결과값이 <strong>정수로 반올림</strong>된 것을 역으로 추론.
     공식 예측값의 소수점(<code>fp % 1</code>)이 반올림 방향을 결정한다는 핵심 인사이트 도출 →
-    RMSE 0.2895에서 <strong style="color:var(--green)">0.0644로 4.5배 개선</strong> 가능.</p>
+    RMSE 0.2895에서 <strong style="color:var(--green)">0.0626으로 4.6배 개선</strong> 가능.</p>
   </div>
 </section>
 
@@ -338,7 +333,7 @@
     <div class="frac-vis">
       <p style="font-size:0.82rem;color:var(--muted2);margin-bottom:1rem">
         공식 예측값의 소수점 위치에 따라 반올림 방향이 완벽하게 결정됩니다.
-        이 단순한 아이디어 하나가 RMSE를 4.5배 개선시킵니다.
+        이 단순한 아이디어 하나가 RMSE를 4.6배 개선시킵니다.
       </p>
       <div style="position:relative; margin: 2.5rem 1rem 2rem;">
         <div class="frac-ruler">
@@ -392,7 +387,7 @@
     <span class="step-badge purple">STEP 03</span>
     <div>
       <h2>4모델 앙상블 + Optuna 튜닝</h2>
-      <div class="subtitle">5-Fold OOF · Optuna 20 trials · Nelder-Mead 가중치 최적화</div>
+      <div class="subtitle">5-Fold OOF · Optuna 20 trials · 가중치 최적화</div>
     </div>
   </div>
 
@@ -415,10 +410,10 @@
       <h4>XGBoost</h4>
       <div class="model-rmse">XGB</div>
       <div class="model-params">
-        n_estimators: ~1000<br>
-        learning_rate: ~0.05<br>
-        max_depth: ~7<br>
-        subsample: ~0.8<br>
+        n_estimators: 600<br>
+        learning_rate: 0.0197<br>
+        max_depth: 4<br>
+        subsample: 0.68<br>
         <br>
         <span style="color:var(--orange)">Optuna 20 trials</span>
       </div>
@@ -428,10 +423,10 @@
       <h4>LightGBM</h4>
       <div class="model-rmse">LGB</div>
       <div class="model-params">
-        n_estimators: ~1200<br>
-        num_leaves: ~100<br>
-        learning_rate: ~0.03<br>
-        early_stopping: 100<br>
+        n_estimators: 1652<br>
+        num_leaves: 74<br>
+        learning_rate: 0.0278<br>
+        subsample: 0.73<br>
         <br>
         <span style="color:var(--green)">Optuna 20 trials</span>
       </div>
@@ -441,10 +436,10 @@
       <h4>CatBoost</h4>
       <div class="model-rmse">CAT</div>
       <div class="model-params">
-        iterations: ~1500<br>
-        depth: ~8<br>
-        learning_rate: ~0.04<br>
-        l2_leaf_reg: ~3.0<br>
+        iterations: 316<br>
+        depth: 6<br>
+        learning_rate: 0.0138<br>
+        l2_leaf_reg: 1.15<br>
         <br>
         <span style="color:var(--purple)">Optuna 20 trials</span>
       </div>
@@ -462,38 +457,38 @@
       <div style="margin-top:1rem">
         <div class="weight-bar-wrap">
           <div class="weight-bar-label">
-            <span style="color:var(--blue)">🌲 ExtraTrees</span>
-            <span style="font-family:'JetBrains Mono',monospace;color:var(--blue)" id="wt-et">45.2%</span>
-          </div>
-          <div class="weight-bar-track">
-            <div class="weight-bar-fill" style="width:45.2%;background:var(--blue)"></div>
-          </div>
-        </div>
-        <div class="weight-bar-wrap">
-          <div class="weight-bar-label">
             <span style="color:var(--orange)">⚡ XGBoost</span>
-            <span style="font-family:'JetBrains Mono',monospace;color:var(--orange)" id="wt-xgb">22.8%</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--orange)" id="wt-xgb">47.1%</span>
           </div>
           <div class="weight-bar-track">
-            <div class="weight-bar-fill" style="width:22.8%;background:var(--orange)"></div>
+            <div class="weight-bar-fill" style="width:47.1%;background:var(--orange)"></div>
           </div>
         </div>
         <div class="weight-bar-wrap">
           <div class="weight-bar-label">
-            <span style="color:var(--green)">💡 LightGBM</span>
-            <span style="font-family:'JetBrains Mono',monospace;color:var(--green)" id="wt-lgb">20.3%</span>
+            <span style="color:var(--blue)">🌲 ExtraTrees</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--blue)" id="wt-et">27.5%</span>
           </div>
           <div class="weight-bar-track">
-            <div class="weight-bar-fill" style="width:20.3%;background:var(--green)"></div>
+            <div class="weight-bar-fill" style="width:27.5%;background:var(--blue)"></div>
           </div>
         </div>
         <div class="weight-bar-wrap">
           <div class="weight-bar-label">
             <span style="color:var(--purple)">🐱 CatBoost</span>
-            <span style="font-family:'JetBrains Mono',monospace;color:var(--purple)" id="wt-cat">11.7%</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--purple)" id="wt-cat">20.2%</span>
           </div>
           <div class="weight-bar-track">
-            <div class="weight-bar-fill" style="width:11.7%;background:var(--purple)"></div>
+            <div class="weight-bar-fill" style="width:20.2%;background:var(--purple)"></div>
+          </div>
+        </div>
+        <div class="weight-bar-wrap">
+          <div class="weight-bar-label">
+            <span style="color:var(--green)">💡 LightGBM</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--green)" id="wt-lgb">5.1%</span>
+          </div>
+          <div class="weight-bar-track">
+            <div class="weight-bar-fill" style="width:5.1%;background:var(--green)"></div>
           </div>
         </div>
       </div>
@@ -501,7 +496,7 @@
       <div style="font-size:0.78rem;color:var(--muted2);line-height:1.8">
         <div>📌 <strong style="color:var(--text)">Nelder-Mead</strong> — 50회 랜덤 초기화, 최적 수렴</div>
         <div>📌 <strong style="color:var(--text)">OOF 기반</strong> 가중치 탐색 (Data Leakage 방지)</div>
-        <div>📌 <strong style="color:var(--text)">ExtraTrees</strong>가 fp_frac 패턴에 가장 강력</div>
+        <div>📌 <strong style="color:var(--text)">XGBoost</strong>가 앙상블에서 가장 높은 기여도</div>
       </div>
     </div>
   </div>
@@ -532,9 +527,9 @@
   <!-- Final metric cards -->
   <div class="grid-4" style="margin-bottom:1.5rem">
     <div class="final-metric scale-in delay-1">
-      <div class="fm-val">0.0644</div>
+      <div class="fm-val">0.0626</div>
       <div class="fm-label">Final RMSE</div>
-      <div class="fm-sub">4.5× improvement over formula-only</div>
+      <div class="fm-sub">4.6× improvement over formula-only</div>
     </div>
     <div class="final-metric scale-in delay-2" style="--accent:var(--blue)">
       <div class="fm-val" style="color:var(--blue)">0.99999</div>
@@ -542,7 +537,7 @@
       <div class="fm-sub">거의 완벽한 설명력</div>
     </div>
     <div class="final-metric scale-in delay-3">
-      <div class="fm-val" style="color:var(--purple)">99.9%+</div>
+      <div class="fm-val" style="color:var(--purple)">99.55%</div>
       <div class="fm-label">반올림 정확도</div>
       <div class="fm-sub">정수 예측 정확도</div>
     </div>
@@ -594,7 +589,7 @@
     </div>
     <div class="insight-card fade-in delay-2">
       <h4>💎 인사이트 2 — fp_frac의 마법</h4>
-      <p><code>formula_frac = fp % 1</code> 이 단 한 줄의 피처가 RMSE를 0.289 → 0.064로 줄였다.
+      <p><code>formula_frac = fp % 1</code> 이 단 한 줄의 피처가 RMSE를 0.289 → 0.062로 줄였다.
       데이터가 정수 반올림되었다는 사실을 발견하고, <strong style="color:var(--blue)">소수점 정보를 피처로 만든 것</strong>이 핵심.</p>
     </div>
     <div class="insight-card green fade-in delay-3">
@@ -605,8 +600,7 @@
     <div class="insight-card purple fade-in delay-4">
       <h4>⚡ 인사이트 4 — Optuna 자동 튜닝</h4>
       <p>XGBoost, LightGBM, CatBoost 각각 20 trial의 Optuna 튜닝.
-      <strong style="color:var(--purple)">MedianPruner</strong>로 조기 중단하여 효율적 탐색.
-      3-Fold 내부 CV로 과적합 방지.</p>
+      최적의 하이퍼파라미터를 자동으로 탐색하여 모델 개별 성능 극대화.</p>
     </div>
   </div>
 
@@ -633,7 +627,7 @@
       </div>
     </div>
     <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:8px;padding:1rem;text-align:center;margin-top:0.5rem">
-      <span style="font-size:1rem;font-weight:700;color:var(--green)">= RMSE 0.0644 · R² 0.99999 · 반올림 정확도 99.9%+</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--green)">= RMSE 0.0626 · R² 0.99999 · 반올림 정확도 99.55%</span>
     </div>
   </div>
 
@@ -672,7 +666,7 @@
 </div><!-- /.page -->
 
 <footer>
-  <div style="font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">🏆 Calories Burned Prediction — RMSE 0.0644</div>
+  <div style="font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">🏆 Calories Burned Prediction — RMSE 0.0626</div>
   <div>Keytel 생리학 공식 역공학 + ExtraTrees + XGBoost + LightGBM + CatBoost 앙상블</div>
   <div style="margin-top:0.5rem;color:var(--muted)">scipy L-BFGS-B · Optuna · 5-Fold OOF · Nelder-Mead 가중치 최적화</div>
 </footer>

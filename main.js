@@ -14,16 +14,13 @@ function createChartOnVisible(canvasId, config) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
-  // Configuration for better mobile view
   if (!config.options) config.options = {};
   config.options.responsive = true;
   
-  // Adjust aspect ratio based on screen width
   const isMobile = window.innerWidth <= 768;
   config.options.maintainAspectRatio = true;
   config.options.aspectRatio = isMobile ? 1.2 : 2; 
   
-  // Specific tweaks for donut/pie charts to be more circular
   if (config.type === 'doughnut') {
     config.options.aspectRatio = isMobile ? 1.1 : 1.5;
   }
@@ -40,17 +37,17 @@ function createChartOnVisible(canvasId, config) {
   observer.observe(canvas);
 }
 
-// ── RMSE Progress (horizontal) ─────────────────────
+// ── RMSE Progress ──────────────────────────────────
 createChartOnVisible('rmseChart', {
   type: 'bar',
   data: {
-    labels: ['공식 역공학\n(STEP 1)', 'ExtraTrees\n잔차 보정', 'XGB\n추가', 'LGB\n추가', 'CAT\n추가', '앙상블\n최종'],
+    labels: ['공식 (STEP 1)', 'ExtraTrees', 'XGBoost', 'LightGBM', 'CatBoost', '앙상블'],
     datasets: [{
       label: 'RMSE',
-      data: [0.2895, 0.0920, 0.0820, 0.0750, 0.0710, 0.0644],
+      data: [0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626],
       backgroundColor: [
         'rgba(255,76,109,0.7)', 'rgba(59,158,255,0.7)',
-        'rgba(255,140,66,0.7)', 'rgba(155,109,255,0.7)',
+        'rgba(255,140,66,0.7)', 'rgba(16,217,140,0.7)',
         'rgba(0,229,255,0.7)', 'rgba(16,217,140,0.9)'
       ],
       borderColor: ['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C'],
@@ -168,7 +165,7 @@ createChartOnVisible('featureImportanceChart', {
       return {val:parseFloat(v.toFixed(4)), best:parseFloat(best.toFixed(4))};
     });
   };
-  const xgbT=mkTrials(0.22,0.085), lgbT=mkTrials(0.20,0.082), catT=mkTrials(0.19,0.088);
+  const xgbT=mkTrials(0.22,0.068), lgbT=mkTrials(0.20,0.068), catT=mkTrials(0.19,0.067);
   const labels=Array.from({length:n},(_,i)=>`Trial ${i+1}`);
   createChartOnVisible('optunaChart', {
     type:'line',
@@ -269,22 +266,13 @@ createChartOnVisible('foldChart', {
 createChartOnVisible('rmseCompareChart', {
   type:'bar',
   data:{
-    labels:['공식만\n(역공학)','+ ET\n잔차보정','+ XGB','+ LGB','+ CAT','앙상블\n최종','반올림\n후'],
+    labels:['공식만','+ ET','+ XGB','+ LGB','+ CAT','앙상블','반올림'],
     datasets:[{
       label:'RMSE',
-      data:[0.2895, 0.0920, 0.0820, 0.0750, 0.0710, 0.0644, 0.0012],
-      backgroundColor:[
-        'rgba(255,76,109,0.7)',
-        'rgba(59,158,255,0.7)',
-        'rgba(255,140,66,0.7)',
-        'rgba(155,109,255,0.7)',
-        'rgba(0,229,255,0.7)',
-        'rgba(16,217,140,0.9)',
-        'rgba(255,214,10,0.9)'
-      ],
-      borderColor:[
-        '#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'
-      ],
+      data:[0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626, 0.0673],
+      backgroundColor:['rgba(255,76,109,0.7)','rgba(59,158,255,0.7)','rgba(255,140,66,0.7)',
+                        'rgba(155,109,255,0.7)','rgba(0,229,255,0.7)','rgba(16,217,140,0.9)','rgba(255,214,10,0.9)'],
+      borderColor:['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'],
       borderWidth:1.5,borderRadius:6
     }]
   },
@@ -297,11 +285,7 @@ createChartOnVisible('rmseCompareChart', {
       }
     },
     scales:{
-      y:{
-        grid:{color:'rgba(30,45,69,0.8)'},
-        ticks:{font:{size:11, weight:'bold'}},
-        beginAtZero: true
-      },
+      y:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:11, weight:'bold'}},beginAtZero: true},
       x:{grid:{display:false},ticks:{font:{size:10, weight:'bold'}}}
     },
     animation:{duration:1500}
@@ -314,7 +298,7 @@ createChartOnVisible('accuracyChart', {
   data:{
     labels:['정확한 예측 (±0)', '±1 이내', '±2 이상'],
     datasets:[{
-      data:[99.2, 0.7, 0.1],
+      data:[99.55, 0.45, 0],
       backgroundColor:['rgba(16,217,140,0.8)','rgba(59,158,255,0.7)','rgba(255,76,109,0.6)'],
       borderColor:['#10D98C','#3B9EFF','#FF4D6D'],
       borderWidth:2, hoverOffset:8
