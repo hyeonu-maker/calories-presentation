@@ -438,6 +438,53 @@ footer {
   color: var(--muted); font-size: 0.9rem;
 }
 
+/* ─── MOBILE OPTIMIZATION ──────────────────── */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 1rem;
+    justify-content: center;
+    height: auto;
+    padding-top: 0.5rem;
+  }
+  nav .logo { margin-bottom: 0.5rem; width: 100%; text-align: center; }
+  nav a { font-size: 0.7rem; padding: 0.5rem 0.4rem; height: auto; }
+
+  .page { padding: 80px 1rem 40px; }
+  
+  h1 { font-size: 1.8rem; text-align: center; }
+  .hero-desc { font-size: 0.9rem; text-align: center; }
+  .hero-tag { font-size: 0.7rem; width: 100%; justify-content: center; text-align: center; }
+  
+  .metric-chips { justify-content: center; }
+  .chip { flex: 1 1 40%; padding: 0.8rem; }
+  .chip-val { font-size: 1.4rem; }
+
+  .grid-2, .grid-3, .grid-4 { 
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+  }
+  
+  /* Final metrics specifically 2x2 on mobile if possible, or 1x1 */
+  #results .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .final-metric .fm-val { font-size: 2.2rem; }
+  .final-metric .fm-label { font-size: 0.8rem; }
+
+  .pipeline-flow {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .pipe-arrow { transform: rotate(90deg); padding: 0.5rem 0; }
+  .pipe-node { width: 100%; max-width: 280px; }
+
+  .formula-box { font-size: 0.85rem; padding: 1rem; }
+  
+  .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  h2 { font-size: 1.3rem; }
+}
+
 /* ─── ANIMATIONS ────────────────────────────── */
 .fade-in {
   opacity: 0;
