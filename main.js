@@ -319,11 +319,11 @@ createChartOnVisible('rmseCompareChart', {
 createChartOnVisible('accuracyChart', {
   type:'doughnut',
   data:{
-    labels:['정확한 예측 (±0)', '±1 이내', '±2 이상'],
+    labels:['정확한 예측 (±0)', '미세 오차 (±1)'],
     datasets:[{
-      data:[99.55, 0.45, 0],
-      backgroundColor:['rgba(16,217,140,0.8)','rgba(59,158,255,0.7)','rgba(255,76,109,0.6)'],
-      borderColor:['#10D98C','#3B9EFF','#FF4D6D'],
+      data:[99.55, 0.45],
+      backgroundColor:['rgba(16,217,140,0.8)','rgba(59,158,255,0.7)'],
+      borderColor:['#10D98C','#3B9EFF'],
       borderWidth:2, hoverOffset:8
     }]
   },
