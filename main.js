@@ -14,6 +14,12 @@ function createChartOnVisible(canvasId, config) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
+  // Ensure responsive settings for all charts
+  if (!config.options) config.options = {};
+  config.options.responsive = true;
+  config.options.maintainAspectRatio = false;
+
+  // Threshold lowered to 0.05 for better mobile detection
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -21,7 +27,7 @@ function createChartOnVisible(canvasId, config) {
         observer.unobserve(canvas);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.05 });
   
   observer.observe(canvas);
 }
@@ -53,7 +59,7 @@ createChartOnVisible('rmseChart', {
       },
       x: { 
         grid: { display: false }, 
-        ticks: { font: { size: 13, weight: 'bold' } } 
+        ticks: { font: { size: 11, weight: 'bold' } } 
       }
     },
     animation: { duration: 1500, easing: 'easeOutQuart' }
@@ -296,8 +302,8 @@ createChartOnVisible('accuracyChart', {
 
 // ── Scroll Animations for HTML Elements ────────────
 const observerOptions = {
-  threshold: 0.15,
-  rootMargin: '0px 0px -50px 0px'
+  threshold: 0.1,
+  rootMargin: '0px 0px -20px 0px'
 };
 
 const observer = new IntersectionObserver(entries => {

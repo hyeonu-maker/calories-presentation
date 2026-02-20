@@ -487,8 +487,9 @@ footer {
   .param-table .desc { min-width: 120px; white-space: normal; }
 
   /* Chart Height Fix */
-  .chart-wrap { padding: 0.8rem; min-height: 250px; }
-  #rmseChart { height: 200px !important; } /* Force height on mobile */
+  .chart-wrap { padding: 0.8rem; min-height: 280px; display: flex; flex-direction: column; }
+  .chart-wrap canvas { flex: 1; width: 100% !important; height: 100% !important; min-height: 200px; }
+  #rmseChart { height: 220px !important; } /* Specific height for RMSE chart */
 
   .pipeline-flow {
     flex-direction: column;
