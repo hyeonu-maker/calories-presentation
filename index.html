@@ -23,18 +23,25 @@
 
 <!-- ─── HERO ─────────────────────────────────────── -->
 <div class="page">
-<section id="hero">
-  <div class="hero-tag">Kaggle Competition · Regression · RMSE 0.064</div>
-  <h1>
+<section id="hero" class="reveal-up">
+  <div class="hero-tag" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-radius: 12px; padding: 0.6rem 1.2rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      [초격차] AI 헬스케어 머신러닝 트랙: 칼로리 소모량 예측 AI 해커톤
+    </div>
+    <div style="font-size: 0.72rem; color: var(--muted2); padding-left: 1.1rem;">
+      알고리즘 | 정형 | 회귀 | 헬스 | RMSE
+    </div>
+  </div>
+  <h1 class="fade-in delay-1">
     <span class="accent">칼로리 소모량</span> 예측<br>
     생리학 공식 + ML <span class="accent-green">하이브리드</span>
   </h1>
-  <p class="hero-desc">
+  <p class="hero-desc fade-in delay-2">
     Keytel 생리학 공식의 역공학으로 도메인 지식을 추출하고,<br>
     4개 모델(ExtraTrees · XGBoost · LightGBM · CatBoost) 앙상블로<br>
     RMSE <strong style="color:var(--green)">0.0644</strong> · R² <strong style="color:var(--blue)">0.99999+</strong> 달성
   </p>
-  <div class="metric-chips">
+  <div class="metric-chips fade-in delay-3">
     <div class="chip green">
       <span class="chip-val">0.0644</span>
       <span class="chip-label">Final RMSE</span>
@@ -54,7 +61,7 @@
   </div>
 
   <!-- Strategy Summary Table -->
-  <div class="card">
+  <div class="card scale-in delay-4">
     <div class="chart-title">전략 요약 — 3단계 접근법</div>
     <table class="compare-table">
       <thead>
@@ -90,7 +97,7 @@
 </section>
 
 <!-- ─── PIPELINE ──────────────────────────────────── -->
-<section id="pipeline">
+<section id="pipeline" class="reveal-up">
   <div class="section-header">
     <span class="step-badge">OVERVIEW</span>
     <div>
@@ -99,43 +106,43 @@
     </div>
   </div>
 
-  <div class="pipeline-flow fade-in">
-    <div class="pipe-node">
+  <div class="pipeline-flow">
+    <div class="pipe-node fade-in delay-1">
       <div class="icon">📥</div>
       <h4>Raw Data</h4>
       <p>Gender, BPM<br>Weight, Age<br>Duration, Temp<br>Height, BMI</p>
       <div class="rmse-badge" style="color:var(--muted)">입력</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node">
+    <div class="pipe-node fade-in delay-2">
       <div class="icon">🔬</div>
       <h4>Keytel 공식<br>역공학</h4>
       <p>scipy L-BFGS-B<br>성별별 5개<br>파라미터 최적화</p>
       <div class="rmse-badge" style="color:var(--orange)">RMSE 0.2895</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node">
+    <div class="pipe-node fade-in delay-3">
       <div class="icon">✨</div>
       <h4>fp_frac<br>피처화</h4>
       <p>소수점 분해<br>sin/cos 인코딩<br>22개 피처 생성</p>
       <div class="rmse-badge" style="color:var(--blue)">핵심 아이디어</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node">
+    <div class="pipe-node fade-in delay-4">
       <div class="icon">🎯</div>
       <h4>Optuna 튜닝</h4>
       <p>XGB/LGB/CAT<br>각 20 trial<br>3-Fold 내부 CV</p>
       <div class="rmse-badge" style="color:var(--purple)">자동 최적화</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node">
+    <div class="pipe-node fade-in delay-5">
       <div class="icon">🌲</div>
       <h4>4모델<br>앙상블</h4>
       <p>ET+XGB+LGB+CAT<br>5-Fold OOF<br>잔차 보정</p>
       <div class="rmse-badge" style="color:var(--blue)">RMSE 0.0644</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node highlight">
+    <div class="pipe-node highlight fade-in delay-6">
       <div class="icon">🏆</div>
       <h4>최종 예측</h4>
       <p>Nelder-Mead<br>가중치 최적화<br>정수 반올림</p>
@@ -144,14 +151,14 @@
   </div>
 
   <!-- RMSE Progress Chart -->
-  <div class="chart-wrap" style="margin-top:1.5rem">
+  <div class="chart-wrap scale-in" style="margin-top:1.5rem">
     <div class="chart-title">RMSE 단계별 개선 시각화</div>
     <canvas id="rmseChart" height="80"></canvas>
   </div>
 </section>
 
 <!-- ─── FORMULA ───────────────────────────────────── -->
-<section id="formula">
+<section id="formula" class="reveal-up">
   <div class="section-header">
     <span class="step-badge">STEP 01</span>
     <div>
@@ -162,7 +169,7 @@
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div>
-      <div class="card" style="margin-bottom:1rem">
+      <div class="card fade-in delay-1" style="margin-bottom:1rem">
         <div class="chart-title">🔬 발견된 공식 구조</div>
         <div class="formula-box">
           <span class="f-label">남성 (Male)</span>
@@ -188,7 +195,7 @@
           <span class="f-op">- 98.6))</span>
         </div>
       </div>
-      <div class="card">
+      <div class="card fade-in delay-2">
         <div class="chart-title">⚙️ 최적화 설정</div>
         <div class="code-block">
 <span class="c-comment"># scipy L-BFGS-B — 성별별 독립 최적화</span>
@@ -205,7 +212,7 @@
       </div>
     </div>
     <div>
-      <div class="card" style="margin-bottom:1rem">
+      <div class="card fade-in delay-1" style="margin-bottom:1rem">
         <div class="chart-title">📊 최적화된 파라미터 값</div>
         <table class="param-table">
           <thead>
@@ -245,7 +252,7 @@
           </tbody>
         </table>
       </div>
-      <div class="card">
+      <div class="card scale-in delay-3">
         <div class="chart-title">📈 공식 단독 성능</div>
         <canvas id="formulaResidualChart" height="150"></canvas>
       </div>
@@ -253,7 +260,7 @@
   </div>
 
   <!-- Key insight about residuals -->
-  <div class="insight-card orange">
+  <div class="insight-card orange fade-in delay-2">
     <h4>💡 핵심 발견: 잔차가 모두 ±0.55 이내</h4>
     <p>Keytel 공식이 데이터 생성에 사용되었으며, 결과값이 <strong>정수로 반올림</strong>된 것을 역으로 추론.
     공식 예측값의 소수점(<code>fp % 1</code>)이 반올림 방향을 결정한다는 핵심 인사이트 도출 →
@@ -262,7 +269,7 @@
 </section>
 
 <!-- ─── FEATURES ──────────────────────────────────── -->
-<section id="features">
+<section id="features" class="reveal-up">
   <div class="section-header">
     <span class="step-badge green">STEP 02</span>
     <div>
@@ -272,7 +279,7 @@
   </div>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
-    <div>
+    <div class="fade-in delay-1">
       <div class="feature-group">
         <div class="feature-group-header" style="color:var(--orange)">
           ⭐ 핵심 피처 — 공식 소수점 분해 (fp_frac)
@@ -317,7 +324,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="scale-in delay-2">
       <div class="chart-wrap">
         <div class="chart-title">🎯 피처 중요도 (ExtraTrees 기준)</div>
         <canvas id="featureImportanceChart" height="240"></canvas>
@@ -326,7 +333,7 @@
   </div>
 
   <!-- fp_frac visualization -->
-  <div class="card" style="margin-bottom:1rem">
+  <div class="card fade-in delay-2" style="margin-bottom:1rem">
     <div class="chart-title">🔍 fp_frac — 반올림 방향 결정 메커니즘</div>
     <div class="frac-vis">
       <p style="font-size:0.82rem;color:var(--muted2);margin-bottom:1rem">
@@ -352,17 +359,17 @@
         </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem">
-        <div style="background:var(--blue-dim);border:1px solid var(--blue);border-radius:8px;padding:1rem;text-align:center">
+        <div class="fade-in delay-1" style="background:var(--blue-dim);border:1px solid var(--blue);border-radius:8px;padding:1rem;text-align:center">
           <div style="font-size:1.2rem;font-family:'JetBrains Mono',monospace;color:var(--blue);font-weight:700">fp = 5.12</div>
           <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">frac = 0.12 → 내림</div>
           <div style="font-size:1rem;color:var(--blue);margin-top:0.3rem;font-weight:700">예측: 5</div>
         </div>
-        <div style="background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:8px;padding:1rem;text-align:center">
+        <div class="fade-in delay-2" style="background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:8px;padding:1rem;text-align:center">
           <div style="font-size:1.2rem;font-family:'JetBrains Mono',monospace;color:var(--yellow);font-weight:700">fp = 5.49</div>
           <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">frac = 0.49 → 불확실</div>
           <div style="font-size:1rem;color:var(--yellow);margin-top:0.3rem;font-weight:700">ML이 판단</div>
         </div>
-        <div style="background:var(--red-dim);border:1px solid var(--red);border-radius:8px;padding:1rem;text-align:center">
+        <div class="fade-in delay-3" style="background:var(--red-dim);border:1px solid var(--red);border-radius:8px;padding:1rem;text-align:center">
           <div style="font-size:1.2rem;font-family:'JetBrains Mono',monospace;color:var(--red);font-weight:700">fp = 5.87</div>
           <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem">frac = 0.87 → 올림</div>
           <div style="font-size:1rem;color:var(--red);margin-top:0.3rem;font-weight:700">예측: 6</div>
@@ -371,7 +378,7 @@
     </div>
   </div>
 
-  <div class="insight-card">
+  <div class="insight-card fade-in delay-2">
     <h4>💡 sin/cos 인코딩의 이유</h4>
     <p><code>fp_frac = 0.0</code>과 <code>fp_frac = 1.0</code>은 같은 "내림"이지만 수치상 거리가 1입니다.
     <code>sin(2π × frac)</code>과 <code>cos(2π × frac)</code>으로 인코딩하면 주기적 연속성을 보장하여
@@ -380,7 +387,7 @@
 </section>
 
 <!-- ─── MODELS ────────────────────────────────────── -->
-<section id="models">
+<section id="models" class="reveal-up">
   <div class="section-header">
     <span class="step-badge purple">STEP 03</span>
     <div>
@@ -390,7 +397,7 @@
   </div>
 
   <div class="grid-4" style="margin-bottom:1.5rem">
-    <div class="model-card et">
+    <div class="model-card et scale-in delay-1">
       <div class="model-icon">🌲</div>
       <h4>ExtraTrees</h4>
       <div class="model-rmse">ET</div>
@@ -403,7 +410,7 @@
         <span style="color:var(--blue)">★ 튜닝 없이 강력</span>
       </div>
     </div>
-    <div class="model-card xgb">
+    <div class="model-card xgb scale-in delay-2">
       <div class="model-icon">⚡</div>
       <h4>XGBoost</h4>
       <div class="model-rmse">XGB</div>
@@ -416,7 +423,7 @@
         <span style="color:var(--orange)">Optuna 20 trials</span>
       </div>
     </div>
-    <div class="model-card lgb">
+    <div class="model-card lgb scale-in delay-3">
       <div class="model-icon">💡</div>
       <h4>LightGBM</h4>
       <div class="model-rmse">LGB</div>
@@ -429,7 +436,7 @@
         <span style="color:var(--green)">Optuna 20 trials</span>
       </div>
     </div>
-    <div class="model-card cat">
+    <div class="model-card cat scale-in delay-4">
       <div class="model-icon">🐱</div>
       <h4>CatBoost</h4>
       <div class="model-rmse">CAT</div>
@@ -446,11 +453,11 @@
 
   <!-- Optuna visualization -->
   <div class="grid-2" style="margin-bottom:1.5rem">
-    <div class="card">
+    <div class="card scale-in delay-1">
       <div class="chart-title">🎯 Optuna 튜닝 — Trial별 RMSE (시뮬레이션)</div>
       <canvas id="optunaChart" height="190"></canvas>
     </div>
-    <div class="card">
+    <div class="card scale-in delay-2">
       <div class="chart-title">⚖️ 최종 앙상블 가중치 (Nelder-Mead 최적화)</div>
       <div style="margin-top:1rem">
         <div class="weight-bar-wrap">
@@ -500,7 +507,7 @@
   </div>
 
   <!-- 5-Fold OOF explanation -->
-  <div class="card">
+  <div class="card fade-in delay-2">
     <div class="chart-title">🔄 5-Fold OOF (Out-of-Fold) 전략</div>
     <canvas id="foldChart" height="70"></canvas>
     <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted2);line-height:1.8">
@@ -513,7 +520,7 @@
 </section>
 
 <!-- ─── RESULTS ───────────────────────────────────── -->
-<section id="results">
+<section id="results" class="reveal-up">
   <div class="section-header">
     <span class="step-badge yellow">RESULTS</span>
     <div>
@@ -524,22 +531,22 @@
 
   <!-- Final metric cards -->
   <div class="grid-4" style="margin-bottom:1.5rem">
-    <div class="final-metric">
+    <div class="final-metric scale-in delay-1">
       <div class="fm-val">0.0644</div>
       <div class="fm-label">Final RMSE</div>
       <div class="fm-sub">4.5× improvement over formula-only</div>
     </div>
-    <div class="final-metric" style="--accent:var(--blue)">
+    <div class="final-metric scale-in delay-2" style="--accent:var(--blue)">
       <div class="fm-val" style="color:var(--blue)">0.99999</div>
       <div class="fm-label">R² Score</div>
       <div class="fm-sub">거의 완벽한 설명력</div>
     </div>
-    <div class="final-metric">
+    <div class="final-metric scale-in delay-3">
       <div class="fm-val" style="color:var(--purple)">99.9%+</div>
       <div class="fm-label">반올림 정확도</div>
       <div class="fm-sub">정수 예측 정확도</div>
     </div>
-    <div class="final-metric">
+    <div class="final-metric scale-in delay-4">
       <div class="fm-val" style="color:var(--orange)">±0.55</div>
       <div class="fm-label">최대 잔차 범위</div>
       <div class="fm-sub">공식 단계 잔차 한계</div>
@@ -547,22 +554,22 @@
   </div>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
-    <div class="chart-wrap">
+    <div class="chart-wrap fade-in delay-1">
       <div class="chart-title">📍 실제값 vs 예측값 (Predicted vs Actual)</div>
       <canvas id="scatterChart" height="260"></canvas>
     </div>
-    <div class="chart-wrap">
+    <div class="chart-wrap fade-in delay-2">
       <div class="chart-title">📊 잔차 분포 (Residual Distribution)</div>
       <canvas id="residualChart" height="260"></canvas>
     </div>
   </div>
 
   <div class="grid-2">
-    <div class="chart-wrap">
+    <div class="chart-wrap fade-in delay-1">
       <div class="chart-title">📉 RMSE 단계별 개선 비교</div>
       <canvas id="rmseCompareChart" height="200"></canvas>
     </div>
-    <div class="chart-wrap">
+    <div class="chart-wrap scale-in delay-2">
       <div class="chart-title">🎯 예측 정확도 — 반올림 후 분포</div>
       <canvas id="accuracyChart" height="200"></canvas>
     </div>
@@ -570,7 +577,7 @@
 </section>
 
 <!-- ─── INSIGHTS ─────────────────────────────────── -->
-<section id="insights">
+<section id="insights" class="reveal-up">
   <div class="section-header">
     <span class="step-badge red">INSIGHTS</span>
     <div>
@@ -580,22 +587,22 @@
   </div>
 
   <div class="grid-2" style="margin-bottom:1rem">
-    <div class="insight-card orange">
+    <div class="insight-card orange fade-in delay-1">
       <h4>🔬 인사이트 1 — 도메인 지식의 위력</h4>
       <p>Keytel 생리학 공식을 역공학으로 복원한 것이 핵심. 순수 ML 접근만으로는 절대 달성할 수 없는 RMSE를 달성.
       <strong style="color:var(--orange)">도메인 지식 + ML의 결합</strong>이 최고의 성능을 만든다.</p>
     </div>
-    <div class="insight-card">
+    <div class="insight-card fade-in delay-2">
       <h4>💎 인사이트 2 — fp_frac의 마법</h4>
       <p><code>formula_frac = fp % 1</code> 이 단 한 줄의 피처가 RMSE를 0.289 → 0.064로 줄였다.
       데이터가 정수 반올림되었다는 사실을 발견하고, <strong style="color:var(--blue)">소수점 정보를 피처로 만든 것</strong>이 핵심.</p>
     </div>
-    <div class="insight-card green">
+    <div class="insight-card green fade-in delay-3">
       <h4>🎯 인사이트 3 — OOF의 중요성</h4>
       <p>5-Fold OOF 전략으로 Data Leakage를 완벽 차단. 훈련 데이터 전체에 대한 예측을 생성하여
       앙상블 가중치를 최적화할 때 <strong style="color:var(--green)">공정한 검증</strong> 환경 유지.</p>
     </div>
-    <div class="insight-card purple">
+    <div class="insight-card purple fade-in delay-4">
       <h4>⚡ 인사이트 4 — Optuna 자동 튜닝</h4>
       <p>XGBoost, LightGBM, CatBoost 각각 20 trial의 Optuna 튜닝.
       <strong style="color:var(--purple)">MedianPruner</strong>로 조기 중단하여 효율적 탐색.
@@ -604,7 +611,7 @@
   </div>
 
   <!-- Why this approach works - visual explanation -->
-  <div class="card" style="margin-bottom:1rem">
+  <div class="card scale-in delay-1" style="margin-bottom:1rem">
     <div class="chart-title">🧠 왜 이 접근법이 효과적인가?</div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:1rem;padding:1rem 0">
       <div style="text-align:center">
@@ -631,7 +638,7 @@
   </div>
 
   <!-- Submission info -->
-  <div class="card">
+  <div class="card fade-in delay-2">
     <div class="chart-title">📤 최종 제출 — submission.csv</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
       <div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:1rem">

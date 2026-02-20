@@ -7,10 +7,27 @@ const COLORS = {
 
 Chart.defaults.color = '#6B7FA0';
 Chart.defaults.font.family = "'JetBrains Mono', 'Noto Sans KR', sans-serif";
-Chart.defaults.font.size = 12; // 기본 폰트 크기 상향
+Chart.defaults.font.size = 12;
+
+// Utility to create chart when visible
+function createChartOnVisible(canvasId, config) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        new Chart(canvas, config);
+        observer.unobserve(canvas);
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  observer.observe(canvas);
+}
 
 // ── RMSE Progress (horizontal) ─────────────────────
-new Chart(document.getElementById('rmseChart'), {
+createChartOnVisible('rmseChart', {
   type: 'bar',
   data: {
     labels: ['공식 역공학\n(STEP 1)', 'ExtraTrees\n잔차 보정', 'XGB\n추가', 'LGB\n추가', 'CAT\n추가', '앙상블\n최종'],
@@ -27,28 +44,24 @@ new Chart(document.getElementById('rmseChart'), {
     }]
   },
   options: {
-    plugins: {
-      legend: { display: false },
-      datalabels: { display: false }
-    },
+    plugins: { legend: { display: false } },
     scales: {
       y: { grid: { color: 'rgba(30,45,69,0.8)' }, ticks: { font: { size: 11, weight: 'bold' } }, title: { display: true, text: 'RMSE', color: COLORS.muted, font: { size: 12, weight: 'bold' } } },
       x: { grid: { display: false }, ticks: { font: { size: 11, weight: 'bold' } } }
     },
-    animation: { duration: 1200, easing: 'easeOutQuart' }
+    animation: { duration: 1500, easing: 'easeOutQuart' }
   }
 });
 
-// ── Formula Residual (histogram simulation) ────────
+// ── Formula Residual ───────────────────────────────
 (function(){
   const bins = [];
   const labels = [];
   for(let i=-0.55;i<=0.55;i+=0.05){
     labels.push(i.toFixed(2));
-    // Simulate near-uniform residual distribution before ET
     bins.push(Math.round(800 + Math.random()*200));
   }
-  new Chart(document.getElementById('formulaResidualChart'), {
+  createChartOnVisible('formulaResidualChart', {
     type:'bar',
     data:{
       labels,
@@ -67,13 +80,13 @@ new Chart(document.getElementById('rmseChart'), {
         y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font: {size:12, weight:'bold'}}, ticks: {font: {size:11}}},
         x:{grid:{display:false},ticks:{maxTicksLimit:5,font:{size:11, weight:'bold'}}}
       },
-      animation:{duration:800}
+      animation:{duration:1200}
     }
   });
 })();
 
 // ── Feature Importance ─────────────────────────────
-new Chart(document.getElementById('featureImportanceChart'), {
+createChartOnVisible('featureImportanceChart', {
   type:'bar',
   data:{
     labels:[
@@ -119,7 +132,7 @@ new Chart(document.getElementById('featureImportanceChart'), {
         return COLORS.muted;
       }}}
     },
-    animation:{duration:1000}
+    animation:{duration:1400}
   }
 });
 
@@ -136,7 +149,7 @@ new Chart(document.getElementById('featureImportanceChart'), {
   };
   const xgbT=mkTrials(0.22,0.085), lgbT=mkTrials(0.20,0.082), catT=mkTrials(0.19,0.088);
   const labels=Array.from({length:n},(_,i)=>`Trial ${i+1}`);
-  new Chart(document.getElementById('optunaChart'),{
+  createChartOnVisible('optunaChart', {
     type:'line',
     data:{
       labels,
@@ -152,70 +165,44 @@ new Chart(document.getElementById('featureImportanceChart'), {
         y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'RMSE',color:COLORS.muted, font: {size:12, weight:'bold'}},ticks:{font:{size:11}}},
         x:{grid:{display:false},ticks:{maxTicksLimit:6,font:{size:11, weight:'bold'}}}
       },
-      animation:{duration:1000}
+      animation:{duration:1500}
     }
   });
 })();
 
 // ── 5-Fold OOF Diagram ─────────────────────────────
-(function(){
-  const folds=5;
-  const data=[];
-  const bgColors=[];
-  for(let f=0;f<folds;f++){
-    const row=[];
-    const bg=[];
-    for(let i=0;i<folds;i++){
-      row.push(1);
-      bg.push(i===f ? 'rgba(255,140,66,0.7)' : 'rgba(59,158,255,0.5)');
-    }
-    data.push(row);
-    bgColors.push(bg);
-  }
-  // Stacked bar simulation
-  const datasets=[];
-  for(let f=0;f<folds;f++){
-    datasets.push({
-      label:`Fold ${f+1}`,
-      data: Array(folds).fill(1),
-      backgroundColor: Array.from({length:folds},(_,i)=>i===f?'rgba(255,140,66,0.8)':'rgba(59,158,255,0.5)'),
-      borderColor: Array.from({length:folds},(_,i)=>i===f?COLORS.orange:COLORS.blue),
-      borderWidth:1,borderRadius:4
-    });
-  }
-  new Chart(document.getElementById('foldChart'),{
-    type:'bar',
-    data:{
-      labels:['Fold 1','Fold 2','Fold 3','Fold 4','Fold 5'],
-      datasets:[
-        {label:'Train',data:[4,4,4,4,4],backgroundColor:'rgba(59,158,255,0.5)',borderColor:COLORS.blue,borderWidth:1,borderRadius:4},
-        {label:'Validation (OOF)',data:[1,1,1,1,1],backgroundColor:'rgba(255,140,66,0.7)',borderColor:COLORS.orange,borderWidth:1,borderRadius:4}
-      ]
+createChartOnVisible('foldChart', {
+  type:'bar',
+  data:{
+    labels:['Fold 1','Fold 2','Fold 3','Fold 4','Fold 5'],
+    datasets:[
+      {label:'Train',data:[4,4,4,4,4],backgroundColor:'rgba(59,158,255,0.5)',borderColor:COLORS.blue,borderWidth:1,borderRadius:4},
+      {label:'Validation (OOF)',data:[1,1,1,1,1],backgroundColor:'rgba(255,140,66,0.7)',borderColor:COLORS.orange,borderWidth:1,borderRadius:4}
+    ]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12,padding:12}}},
+    scales:{
+      x:{stacked:true,grid:{color:'rgba(30,45,69,0.6)'},ticks:{font:{size:11, weight:'bold'}},title:{display:true,text:'파티션 수',color:COLORS.muted, font:{size:12, weight:'bold'}}},
+      y:{stacked:true,grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
     },
-    options:{
-      indexAxis:'y',
-      plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12,padding:12}}},
-      scales:{
-        x:{stacked:true,grid:{color:'rgba(30,45,69,0.6)'},ticks:{font:{size:11, weight:'bold'}},title:{display:true,text:'파티션 수',color:COLORS.muted, font:{size:12, weight:'bold'}}},
-        y:{stacked:true,grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
-      },
-      animation:{duration:800}
-    }
-  });
-})();
+    animation:{duration:1200}
+  }
+});
 
-// ── Scatter Chart (Actual vs Predicted) ───────────
+// ── Scatter Chart ──────────────────────────────────
 (function(){
   const n=400;
   const actual=Array.from({length:n},()=>Math.round(5+Math.random()*290));
   const predicted=actual.map(v=>v+(Math.random()-0.5)*0.3);
-  new Chart(document.getElementById('scatterChart'),{
+  createChartOnVisible('scatterChart', {
     type:'scatter',
     data:{datasets:[
       {label:'예측값',data:actual.map((a,i)=>({x:a,y:parseFloat(predicted[i].toFixed(2))})),
        backgroundColor:'rgba(59,158,255,0.4)',borderColor:'rgba(59,158,255,0.7)',
        pointRadius:3,pointHoverRadius:5},
-      {label:'y=x (완벽한 예측)',data:[{x:0,y:0},{x:300,y:300}],
+      {label:'y=x',data:[{x:0,y:0},{x:300,y:300}],
        type:'line',borderColor:COLORS.red,borderDash:[5,5],borderWidth:2,
        pointRadius:0,fill:false,showLine:true}
     ]},
@@ -225,7 +212,7 @@ new Chart(document.getElementById('featureImportanceChart'), {
         x:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'실제 칼로리',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11, weight:'bold'}}},
         y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'예측 칼로리',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11, weight:'bold'}}}
       },
-      animation:{duration:900}
+      animation:{duration:1500}
     }
   });
 })();
@@ -236,11 +223,10 @@ new Chart(document.getElementById('featureImportanceChart'), {
   const data=[];
   for(let v=-0.15;v<=0.15;v+=0.005){
     labels.push(v.toFixed(3));
-    // Gaussian-like, very narrow
     const prob=Math.exp(-0.5*(v/0.04)**2)*1000;
     data.push(Math.round(prob+Math.random()*30));
   }
-  new Chart(document.getElementById('residualChart'),{
+  createChartOnVisible('residualChart', {
     type:'bar',
     data:{labels,datasets:[{
       label:'잔차 빈도',data,
@@ -253,14 +239,13 @@ new Chart(document.getElementById('featureImportanceChart'), {
         y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11}}},
         x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:11, weight:'bold'}}}
       },
-      annotation:{annotations:{line:{type:'line',x:'0.000',borderColor:COLORS.red,borderWidth:2,borderDash:[5,5]}}},
-      animation:{duration:900}
+      animation:{duration:1400}
     }
   });
 })();
 
 // ── RMSE Compare Bar ───────────────────────────────
-new Chart(document.getElementById('rmseCompareChart'),{
+createChartOnVisible('rmseCompareChart', {
   type:'bar',
   data:{
     labels:['공식만\n(역공학)','+ ET\n잔차보정','+ XGB','+ LGB','+ CAT','앙상블\n최종','반올림\n후'],
@@ -274,22 +259,17 @@ new Chart(document.getElementById('rmseCompareChart'),{
     }]
   },
   options:{
-    plugins:{legend:{display:false},
-      tooltip:{
-        bodyFont: { size: 13 },
-        callbacks:{label:ctx=>`RMSE: ${ctx.raw}`}
-      }
-    },
+    plugins:{legend:{display:false}},
     scales:{
       y:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:11, weight:'bold'}}},
       x:{grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
     },
-    animation:{duration:1000}
+    animation:{duration:1500}
   }
 });
 
 // ── Accuracy Donut ─────────────────────────────────
-new Chart(document.getElementById('accuracyChart'),{
+createChartOnVisible('accuracyChart', {
   type:'doughnut',
   data:{
     labels:['정확한 예측 (±0)', '±1 이내', '±2 이상'],
@@ -302,20 +282,25 @@ new Chart(document.getElementById('accuracyChart'),{
   },
   options:{
     cutout:'65%',
-    plugins:{legend:{position:'bottom',labels:{font:{size:12, weight:'bold'},boxWidth:12,padding:12}},
-      tooltip:{
-        bodyFont: { size: 13 },
-        callbacks:{label:ctx=>`${ctx.label}: ${ctx.raw}%`}
-      }
-    },
-    animation:{duration:1200,animateRotate:true}
+    plugins:{legend:{position:'bottom',labels:{font:{size:12, weight:'bold'},boxWidth:12,padding:12}}},
+    animation:{duration:1800,animateRotate:true}
   }
 });
 
-// ── Scroll Animations ──────────────────────────────
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting)e.target.classList.add('visible')
+// ── Scroll Animations for HTML Elements ────────────
+const observerOptions = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
-},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+}, observerOptions);
+
+document.querySelectorAll('.fade-in, .reveal-up, .scale-in').forEach(el => {
+  observer.observe(el);
+});
