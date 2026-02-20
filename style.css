@@ -441,48 +441,75 @@ footer {
 /* ─── MOBILE OPTIMIZATION ──────────────────── */
 @media (max-width: 768px) {
   nav {
-    padding: 0 1rem;
-    justify-content: center;
+    padding: 0 0.5rem;
     height: auto;
     padding-top: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  nav .logo { margin-bottom: 0.5rem; width: 100%; text-align: center; }
-  nav a { font-size: 0.7rem; padding: 0.5rem 0.4rem; height: auto; }
+  nav .logo { margin-bottom: 0.3rem; width: 100%; text-align: center; font-size: 0.75rem; }
+  nav a { font-size: 0.65rem; padding: 0.4rem 0.3rem; }
 
-  .page { padding: 80px 1rem 40px; }
+  .page { padding: 100px 0.8rem 40px; }
   
-  h1 { font-size: 1.8rem; text-align: center; }
-  .hero-desc { font-size: 0.9rem; text-align: center; }
-  .hero-tag { font-size: 0.7rem; width: 100%; justify-content: center; text-align: center; }
+  h1 { font-size: 1.6rem; text-align: center; letter-spacing: -0.02em; }
+  .hero-desc { font-size: 0.85rem; text-align: center; padding: 0 0.5rem; }
+  .hero-tag { font-size: 0.65rem; padding: 0.6rem; line-height: 1.4; border-radius: 8px; }
   
-  .metric-chips { justify-content: center; }
-  .chip { flex: 1 1 40%; padding: 0.8rem; }
-  .chip-val { font-size: 1.4rem; }
+  .metric-chips { gap: 0.6rem; }
+  .chip { flex: 1 1 calc(50% - 0.6rem); padding: 0.7rem; }
+  .chip-val { font-size: 1.2rem; }
+  .chip-label { font-size: 0.7rem; }
 
   .grid-2, .grid-3, .grid-4 { 
     grid-template-columns: 1fr; 
     gap: 1rem; 
   }
   
-  /* Final metrics specifically 2x2 on mobile if possible, or 1x1 */
-  #results .grid-4 {
-    grid-template-columns: 1fr 1fr;
+  /* Table Responsiveness */
+  .card { padding: 1rem; overflow: hidden; }
+  .compare-table, .param-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
-  .final-metric .fm-val { font-size: 2.2rem; }
-  .final-metric .fm-label { font-size: 0.8rem; }
+  
+  .compare-table th, .compare-table td,
+  .param-table th, .param-table td {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  /* Specific fix for Parameter Table: Hide 'Meaning' on very small screens if needed, 
+     but first try making it scrollable and readable. */
+  .param-table .desc { min-width: 120px; white-space: normal; }
+
+  /* Chart Height Fix */
+  .chart-wrap { padding: 0.8rem; min-height: 250px; }
+  #rmseChart { height: 200px !important; } /* Force height on mobile */
 
   .pipeline-flow {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
   }
-  .pipe-arrow { transform: rotate(90deg); padding: 0.5rem 0; }
-  .pipe-node { width: 100%; max-width: 280px; }
+  .pipe-arrow { transform: rotate(90deg); padding: 0.2rem 0; font-size: 1rem; }
+  .pipe-node { width: 100%; max-width: none; padding: 1rem; }
+  .pipe-node h4 { font-size: 0.95rem; }
+  .pipe-node p { font-size: 0.8rem; }
 
-  .formula-box { font-size: 0.85rem; padding: 1rem; }
+  .formula-box { font-size: 0.75rem; padding: 0.8rem; line-height: 1.8; }
   
-  .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-  h2 { font-size: 1.3rem; }
+  .section-header { margin-bottom: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  .step-badge { font-size: 0.75rem; padding: 0.2rem 0.5rem; }
+
+  .final-metric { padding: 1.2rem 0.5rem; }
+  .final-metric .fm-val { font-size: 1.8rem; }
+  .final-metric .fm-label { font-size: 0.7rem; }
+  .final-metric .fm-sub { font-size: 0.65rem; }
 }
 
 /* ─── ANIMATIONS ────────────────────────────── */
