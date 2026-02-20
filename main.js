@@ -273,17 +273,36 @@ createChartOnVisible('rmseCompareChart', {
     datasets:[{
       label:'RMSE',
       data:[0.2895, 0.0920, 0.0820, 0.0750, 0.0710, 0.0644, 0.0012],
-      backgroundColor:['rgba(255,76,109,0.7)','rgba(59,158,255,0.7)','rgba(255,140,66,0.7)',
-                        'rgba(155,109,255,0.7)','rgba(0,229,255,0.7)','rgba(16,217,140,0.9)','rgba(255,214,10,0.9)'],
-      borderColor:['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'],
+      backgroundColor:[
+        'rgba(255,76,109,0.7)',
+        'rgba(59,158,255,0.7)',
+        'rgba(255,140,66,0.7)',
+        'rgba(155,109,255,0.7)',
+        'rgba(0,229,255,0.7)',
+        'rgba(16,217,140,0.9)',
+        'rgba(255,214,10,0.9)'
+      ],
+      borderColor:[
+        '#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'
+      ],
       borderWidth:1.5,borderRadius:6
     }]
   },
   options:{
-    plugins:{legend:{display:false}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        bodyFont: { size: 13 },
+        callbacks:{label:ctx=>`RMSE: ${ctx.raw}`}
+      }
+    },
     scales:{
-      y:{grid:{color:'rgba(30,45,69,0.8)'},ticks:{font:{size:11, weight:'bold'}}},
-      x:{grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
+      y:{
+        grid:{color:'rgba(30,45,69,0.8)'},
+        ticks:{font:{size:11, weight:'bold'}},
+        beginAtZero: true
+      },
+      x:{grid:{display:false},ticks:{font:{size:10, weight:'bold'}}}
     },
     animation:{duration:1500}
   }
