@@ -46,11 +46,14 @@ createChartOnVisible('rmseChart', {
       label: 'RMSE',
       data: [0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.17776],
       backgroundColor: [
-        'rgba(255,76,109,0.7)', 'rgba(59,158,255,0.7)',
-        'rgba(255,140,66,0.7)', 'rgba(16,217,140,0.7)',
-        'rgba(0,229,255,0.7)', 'rgba(16,217,140,0.9)'
+        'rgba(255,76,109,0.7)', // 공식
+        'rgba(59,158,255,0.7)', // ET
+        'rgba(255,140,66,0.7)', // XGB
+        'rgba(16,217,140,0.7)', // LGB
+        'rgba(155,109,255,0.7)', // CAT
+        'rgba(255,214,10,0.9)'  // 최종(LB)
       ],
-      borderColor: ['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C'],
+      borderColor: ['#FF4D6D','#3B9EFF','#FF8C42','#10D98C','#9B6DFF','#FFD60A'],
       borderWidth: 1.5, borderRadius: 6
     }]
   },
@@ -293,9 +296,16 @@ createChartOnVisible('rmseCompareChart', {
     datasets:[{
       label:'RMSE',
       data:[0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626, 0.17776],
-      backgroundColor:['rgba(255,76,109,0.7)','rgba(59,158,255,0.7)','rgba(255,140,66,0.7)',
-                        'rgba(155,109,255,0.7)','rgba(0,229,255,0.7)','rgba(16,217,140,0.9)','rgba(255,214,10,0.9)'],
-      borderColor:['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'],
+      backgroundColor:[
+        'rgba(255,76,109,0.7)', // 공식만
+        'rgba(59,158,255,0.7)', // + ET
+        'rgba(255,140,66,0.7)', // + XGB
+        'rgba(16,217,140,0.7)', // + LGB
+        'rgba(155,109,255,0.7)', // + CAT
+        'rgba(16,217,140,0.9)', // 앙상블(OOF)
+        'rgba(255,214,10,0.9)'  // 제출(LB)
+      ],
+      borderColor:['#FF4D6D','#3B9EFF','#FF8C42','#10D98C','#9B6DFF','#10D98C','#FFD60A'],
       borderWidth:1.5,borderRadius:6
     }]
   },
