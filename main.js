@@ -46,8 +46,15 @@ createChartOnVisible('rmseChart', {
   options: {
     plugins: { legend: { display: false } },
     scales: {
-      y: { grid: { color: 'rgba(30,45,69,0.8)' }, ticks: { font: { size: 11, weight: 'bold' } }, title: { display: true, text: 'RMSE', color: COLORS.muted, font: { size: 12, weight: 'bold' } } },
-      x: { grid: { display: false }, ticks: { font: { size: 11, weight: 'bold' } } }
+      y: { 
+        grid: { color: 'rgba(30,45,69,0.8)' }, 
+        ticks: { font: { size: 13, weight: 'bold' } }, 
+        title: { display: true, text: 'RMSE', color: COLORS.muted, font: { size: 14, weight: 'bold' } } 
+      },
+      x: { 
+        grid: { display: false }, 
+        ticks: { font: { size: 13, weight: 'bold' } } 
+      }
     },
     animation: { duration: 1500, easing: 'easeOutQuart' }
   }
