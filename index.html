@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calories Burned 예측 — RMSE 0.0626 달성</title>
+<title>Calories Burned 예측 — 해커톤 RMSE 0.17776 달성</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -25,33 +25,33 @@
 <div class="page">
 <section id="hero" class="reveal-up">
   <div class="hero-tag">
-    [초격차] AI 헬스케어 머신러닝 트랙: 칼로리 소모량 예측 AI 해커톤 · 알고리즘 | 정형 | 회귀 | 헬스 | RMSE
+    [초격차] AI 헬스케어 머신러닝 트랙: 칼로리 소모량 예측 AI 해커톤 · 최종 스코어 RMSE 0.17776
   </div>
   <h1 class="fade-in delay-1">
     <span class="accent">칼로리 소모량</span> 예측<br>
     생리학 공식 + ML <span class="accent-green">하이브리드</span>
   </h1>
   <p class="hero-desc fade-in delay-2">
-    Keytel 생리학 공식의 역공학으로 도메인 지식을 추출하고,<br>
-    4개 모델(ExtraTrees · XGBoost · LightGBM · CatBoost) 앙상블로<br>
-    RMSE <strong style="color:var(--green)">0.0626</strong> · R² <strong style="color:var(--blue)">0.99999+</strong> 달성
+    Keytel 생리학 공식 역공학 기반의 정교한 피처 엔지니어링과<br>
+    4개 모델(XGB · ET · CAT · LGB) 최적 가중치 앙상블로<br>
+    <strong>최종 리더보드 RMSE <span style="color:var(--green)">0.17776</span></strong> 달성
   </p>
   <div class="metric-chips fade-in delay-3">
     <div class="chip green">
-      <span class="chip-val">0.0626</span>
-      <span class="chip-label">Final RMSE</span>
+      <span class="chip-val">0.17776</span>
+      <span class="chip-label">Hackathon Score</span>
     </div>
     <div class="chip blue">
-      <span class="chip-val">0.99999</span>
-      <span class="chip-label">R² Score</span>
+      <span class="chip-val">0.0626</span>
+      <span class="chip-label">Internal OOF RMSE</span>
     </div>
     <div class="chip purple">
       <span class="chip-val">99.55%</span>
       <span class="chip-label">반올림 정확도</span>
     </div>
     <div class="chip orange">
-      <span class="chip-val">4.6×</span>
-      <span class="chip-label">RMSE 개선 배율</span>
+      <span class="chip-val">1.63×</span>
+      <span class="chip-label">공식 대비 개선</span>
     </div>
   </div>
 
@@ -61,7 +61,7 @@
     <table class="compare-table">
       <thead>
         <tr>
-          <th>단계</th><th>방법</th><th>RMSE</th><th>소요 시간</th><th>개선</th>
+          <th>단계</th><th>방법</th><th>RMSE</th><th>소요 시간</th><th>비고</th>
         </tr>
       </thead>
       <tbody>
@@ -77,12 +77,12 @@
           <td>ExtraTrees 잔차 보정 (fp_frac 핵심 피처)</td>
           <td class="mono" style="color:var(--blue)">0.0642</td>
           <td class="mono">~3분</td>
-          <td>4.5× 개선</td>
+          <td>OOF 기준</td>
         </tr>
         <tr class="highlight-row">
           <td><span class="badge-sm green">FINAL</span></td>
-          <td>4모델 앙상블 + Optuna 튜닝 + 가중치 최적화</td>
-          <td class="mono" style="color:var(--green)">0.0626</td>
+          <td>앙상블 + 정수 반올림 + [1, 300] 클리핑</td>
+          <td class="mono" style="color:var(--green)">0.17776</td>
           <td class="mono">~15분</td>
           <td>🏆 최종 제출</td>
         </tr>
@@ -97,7 +97,7 @@
     <span class="step-badge">OVERVIEW</span>
     <div>
       <h2>전체 파이프라인</h2>
-      <div class="subtitle">데이터 입력부터 최종 제출까지 — 5단계 흐름</div>
+      <div class="subtitle">데이터 입력부터 최종 제출 파일 생성까지</div>
     </div>
   </div>
 
@@ -105,43 +105,36 @@
     <div class="pipe-node fade-in delay-1">
       <div class="icon">📥</div>
       <h4>Raw Data</h4>
-      <p>Gender, BPM<br>Weight, Age<br>Duration, Temp<br>Height, BMI</p>
+      <p>Gender, BPM<br>Weight, Age<br>Duration, Temp</p>
       <div class="rmse-badge" style="color:var(--muted)">입력</div>
     </div>
     <div class="pipe-arrow">→</div>
     <div class="pipe-node fade-in delay-2">
       <div class="icon">🔬</div>
-      <h4>Keytel 공식<br>역공학</h4>
-      <p>scipy L-BFGS-B<br>성별별 5개<br>파라미터 최적화</p>
+      <h4>공식 역공학</h4>
+      <p>성별별 5개<br>파라미터<br>L-BFGS-B 최적화</p>
       <div class="rmse-badge" style="color:var(--orange)">RMSE 0.2895</div>
     </div>
     <div class="pipe-arrow">→</div>
     <div class="pipe-node fade-in delay-3">
       <div class="icon">✨</div>
-      <h4>fp_frac<br>피처화</h4>
-      <p>소수점 분해<br>sin/cos 인코딩<br>22개 피처 생성</p>
-      <div class="rmse-badge" style="color:var(--blue)">핵심 아이디어</div>
+      <h4>피처 엔지니어링</h4>
+      <p>fp_frac (소수점)<br>sin/cos 인코딩<br>도메인 상호작용</p>
+      <div class="rmse-badge" style="color:var(--blue)">OOF 0.0642</div>
     </div>
     <div class="pipe-arrow">→</div>
     <div class="pipe-node fade-in delay-4">
       <div class="icon">🎯</div>
-      <h4>Optuna 튜닝</h4>
-      <p>XGB/LGB/CAT<br>각 20 trial<br>3-Fold 내부 CV</p>
-      <div class="rmse-badge" style="color:var(--purple)">자동 최적화</div>
+      <h4>4모델 앙상블</h4>
+      <p>XGB(47%) 기여<br>Optuna 튜닝<br>가중치 최적화</p>
+      <div class="rmse-badge" style="color:var(--purple)">OOF 0.0626</div>
     </div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-node fade-in delay-5">
-      <div class="icon">🌲</div>
-      <h4>4모델<br>앙상블</h4>
-      <p>ET+XGB+LGB+CAT<br>5-Fold OOF<br>잔차 보정</p>
-      <div class="rmse-badge" style="color:var(--blue)">RMSE 0.0626</div>
-    </div>
-    <div class="pipe-arrow">→</div>
-    <div class="pipe-node highlight fade-in delay-6">
-      <div class="icon">🏆</div>
-      <h4>최종 예측</h4>
-      <p>가중치 최적화<br>Nelder-Mead<br>정수 반올림</p>
-      <div class="rmse-badge">🥇 제출</div>
+    <div class="pipe-node highlight fade-in delay-5">
+      <div class="icon">💾</div>
+      <h4>최종 제출 파일</h4>
+      <p>np.round (정수)<br>Clip [1, 300]<br>submission.csv</p>
+      <div class="rmse-badge" style="color:var(--green)">🥇 0.17776</div>
     </div>
   </div>
 
@@ -259,7 +252,7 @@
     <h4>💡 핵심 발견: 잔차가 모두 ±0.55 이내</h4>
     <p>Keytel 공식이 데이터 생성에 사용되었으며, 결과값이 <strong>정수로 반올림</strong>된 것을 역으로 추론.
     공식 예측값의 소수점(<code>fp % 1</code>)이 반올림 방향을 결정한다는 핵심 인사이트 도출 →
-    RMSE 0.2895에서 <strong style="color:var(--green)">0.0626으로 4.6배 개선</strong> 가능.</p>
+    RMSE 0.2895에서 <strong style="color:var(--green)">0.17776으로 개선</strong> 가능.</p>
   </div>
 </section>
 
@@ -333,7 +326,7 @@
     <div class="frac-vis">
       <p style="font-size:0.82rem;color:var(--muted2);margin-bottom:1rem">
         공식 예측값의 소수점 위치에 따라 반올림 방향이 완벽하게 결정됩니다.
-        이 단순한 아이디어 하나가 RMSE를 4.6배 개선시킵니다.
+        이 단순한 아이디어 하나가 리더보드 점수를 획기적으로 개선시킵니다.
       </p>
       <div style="position:relative; margin: 2.5rem 1rem 2rem;">
         <div class="frac-ruler">
@@ -520,16 +513,16 @@
     <span class="step-badge yellow">RESULTS</span>
     <div>
       <h2>최종 결과 분석</h2>
-      <div class="subtitle">실제 vs 예측 · 잔차 분포 · 단계별 RMSE 개선</div>
+      <div class="subtitle">실제 리더보드 점수 · 단계별 개선 과정</div>
     </div>
   </div>
 
   <!-- Final metric cards -->
   <div class="grid-4" style="margin-bottom:1.5rem">
     <div class="final-metric scale-in delay-1">
-      <div class="fm-val">0.0626</div>
-      <div class="fm-label">Final RMSE</div>
-      <div class="fm-sub">4.6× improvement over formula-only</div>
+      <div class="fm-val">0.17776</div>
+      <div class="fm-label">Leaderboard RMSE</div>
+      <div class="fm-sub">최종 제출 공식 성적</div>
     </div>
     <div class="final-metric scale-in delay-2" style="--accent:var(--blue)">
       <div class="fm-val" style="color:var(--blue)">0.99999</div>
@@ -539,12 +532,12 @@
     <div class="final-metric scale-in delay-3">
       <div class="fm-val" style="color:var(--purple)">99.55%</div>
       <div class="fm-label">반올림 정확도</div>
-      <div class="fm-sub">정수 예측 정확도</div>
+      <div class="fm-sub">정수 예측 일치율</div>
     </div>
     <div class="final-metric scale-in delay-4">
-      <div class="fm-val" style="color:var(--orange)">±0.55</div>
-      <div class="fm-label">최대 잔차 범위</div>
-      <div class="fm-sub">공식 단계 잔차 한계</div>
+      <div class="fm-val" style="color:var(--orange)">0.0626</div>
+      <div class="fm-label">Validation RMSE</div>
+      <div class="fm-sub">내부 검증 (OOF) 성능</div>
     </div>
   </div>
 
@@ -588,19 +581,19 @@
       <strong style="color:var(--orange)">도메인 지식 + ML의 결합</strong>이 최고의 성능을 만든다.</p>
     </div>
     <div class="insight-card fade-in delay-2">
-      <h4>💎 인사이트 2 — fp_frac의 마법</h4>
-      <p><code>formula_frac = fp % 1</code> 이 단 한 줄의 피처가 RMSE를 0.289 → 0.062로 줄였다.
-      데이터가 정수 반올림되었다는 사실을 발견하고, <strong style="color:var(--blue)">소수점 정보를 피처로 만든 것</strong>이 핵심.</p>
+      <h4>💎 인사이트 2 — 후처리의 중요성</h4>
+      <p>데이터가 정수 기반이라는 점을 활용하여 <code>np.round</code> 및 <code>np.clip(1, 300)</code>을 적용.
+      현실적인 예측 범위를 강제하여 <strong style="color:var(--blue)">비정상적인 오차를 사전에 방지</strong>함.</p>
     </div>
     <div class="insight-card green fade-in delay-3">
-      <h4>🎯 인사이트 3 — OOF의 중요성</h4>
+      <h4>🎯 인사이트 3 — OOF의 신뢰성</h4>
       <p>5-Fold OOF 전략으로 Data Leakage를 완벽 차단. 훈련 데이터 전체에 대한 예측을 생성하여
       앙상블 가중치를 최적화할 때 <strong style="color:var(--green)">공정한 검증</strong> 환경 유지.</p>
     </div>
     <div class="insight-card purple fade-in delay-4">
-      <h4>⚡ 인사이트 4 — Optuna 자동 튜닝</h4>
-      <p>XGBoost, LightGBM, CatBoost 각각 20 trial의 Optuna 튜닝.
-      최적의 하이퍼파라미터를 자동으로 탐색하여 모델 개별 성능 극대화.</p>
+      <h4>⚡ 인사이트 4 — 가중치 앙상블</h4>
+      <p>XGBoost를 중심으로 4개 모델의 장점을 결합. 
+      단일 모델보다 <strong style="color:var(--purple)">일반화 성능이 뛰어난</strong> 최종 예측 모델을 구축함.</p>
     </div>
   </div>
 
@@ -627,7 +620,7 @@
       </div>
     </div>
     <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:8px;padding:1rem;text-align:center;margin-top:0.5rem">
-      <span style="font-size:1rem;font-weight:700;color:var(--green)">= RMSE 0.0626 · R² 0.99999 · 반올림 정확도 99.55%</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--green)">= 리더보드 RMSE 0.17776 · 반올림 정확도 99.55%</span>
     </div>
   </div>
 
@@ -636,27 +629,27 @@
     <div class="chart-title">📤 최종 제출 — submission.csv</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
       <div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:1rem">
-        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">전처리</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">전처리 (Post-process)</div>
         <div style="font-size:0.85rem;line-height:1.8">
-          <div>✅ 정수 반올림</div>
-          <div>✅ 클리핑: [1, 300]</div>
-          <div>✅ 음수값 제거</div>
+          <div>✅ np.round (정수 반올림)</div>
+          <div>✅ np.clip (1 ~ 300)</div>
+          <div>✅ submission.csv 생성</div>
         </div>
       </div>
       <div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:1rem">
-        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">예측 범위</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">최종 성능</div>
         <div style="font-size:0.85rem;line-height:1.8">
-          <div>📊 1 ~ 300 칼로리</div>
-          <div>📊 평균: ~150 kcal</div>
-          <div>📊 정수값 제출</div>
+          <div>📊 LB Score: 0.17776</div>
+          <div>📊 OOF RMSE: 0.06257</div>
+          <div>📊 R2: 0.999999</div>
         </div>
       </div>
       <div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:1rem">
-        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">소요 시간</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em">기타 정보</div>
         <div style="font-size:0.85rem;line-height:1.8">
-          <div>⏱ 공식 역공학: ~20s</div>
-          <div>⏱ Optuna 튜닝: ~8분</div>
-          <div>⏱ 앙상블 학습: ~7분</div>
+          <div>⏱ 총 학습: 207s</div>
+          <div>🎯 정확도: 99.5467%</div>
+          <div>🥇 앙상블 모델 완성</div>
         </div>
       </div>
     </div>
@@ -666,9 +659,9 @@
 </div><!-- /.page -->
 
 <footer>
-  <div style="font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">🏆 Calories Burned Prediction — RMSE 0.0626</div>
-  <div>Keytel 생리학 공식 역공학 + ExtraTrees + XGBoost + LightGBM + CatBoost 앙상블</div>
-  <div style="margin-top:0.5rem;color:var(--muted)">scipy L-BFGS-B · Optuna · 5-Fold OOF · Nelder-Mead 가중치 최적화</div>
+  <div style="font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">🏆 Calories Burned Prediction — RMSE 0.17776</div>
+  <div>Keytel 생리학 공식 역공학 + XGBoost + ExtraTrees + CatBoost + LightGBM 앙상블</div>
+  <div style="margin-top:0.5rem;color:var(--muted)">np.round · np.clip [1, 300] · 5-Fold OOF · 가중치 최적화</div>
 </footer>
 
 <script src="main.js"></script>

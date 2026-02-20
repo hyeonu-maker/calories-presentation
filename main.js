@@ -41,10 +41,10 @@ function createChartOnVisible(canvasId, config) {
 createChartOnVisible('rmseChart', {
   type: 'bar',
   data: {
-    labels: ['공식 (STEP 1)', 'ExtraTrees', 'XGBoost', 'LightGBM', 'CatBoost', '앙상블'],
+    labels: ['공식 (STEP 1)', 'ExtraTrees', 'XGBoost', 'LightGBM', 'CatBoost', '최종(LB)'],
     datasets: [{
       label: 'RMSE',
-      data: [0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626],
+      data: [0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.17776],
       backgroundColor: [
         'rgba(255,76,109,0.7)', 'rgba(59,158,255,0.7)',
         'rgba(255,140,66,0.7)', 'rgba(16,217,140,0.7)',
@@ -209,7 +209,7 @@ createChartOnVisible('foldChart', {
   options:{
     indexAxis:'y',
     plugins:{
-      legend:{ display: false }, // 파티션별 범례는 숨김 (복잡함 방지)
+      legend:{ display: false }, 
       tooltip:{
         callbacks: {
           label: (ctx) => {
@@ -277,7 +277,7 @@ createChartOnVisible('foldChart', {
     options:{
       plugins:{legend:{display:false}},
       scales:{
-        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font:{size:12, weight:'bold'}},ticks:{font:{size:11}}},
+        y:{grid:{color:'rgba(30,45,69,0.8)'},title:{display:true,text:'빈도',color:COLORS.muted, font: {size:12, weight:'bold'}}, ticks: {font: {size:11}}},
         x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:11, weight:'bold'}}}
       },
       animation:{duration:1400}
@@ -289,10 +289,10 @@ createChartOnVisible('foldChart', {
 createChartOnVisible('rmseCompareChart', {
   type:'bar',
   data:{
-    labels:['공식만','+ ET','+ XGB','+ LGB','+ CAT','앙상블','반올림'],
+    labels:['공식만','+ ET','+ XGB','+ LGB','+ CAT','앙상블(OOF)','제출(LB)'],
     datasets:[{
       label:'RMSE',
-      data:[0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626, 0.0673],
+      data:[0.2895, 0.0642, 0.0689, 0.0688, 0.0670, 0.0626, 0.17776],
       backgroundColor:['rgba(255,76,109,0.7)','rgba(59,158,255,0.7)','rgba(255,140,66,0.7)',
                         'rgba(155,109,255,0.7)','rgba(0,229,255,0.7)','rgba(16,217,140,0.9)','rgba(255,214,10,0.9)'],
       borderColor:['#FF4D6D','#3B9EFF','#FF8C42','#9B6DFF','#00E5FF','#10D98C','#FFD60A'],
