@@ -178,17 +178,21 @@ h1 .accent-green { color: var(--green); }
   text-align: center;
   position: relative;
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .pipe-node:hover { border-color: var(--border2); transform: translateY(-2px); }
 .pipe-node .icon { font-size: 2rem; margin-bottom: 0.6rem; }
 .pipe-node h4 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
-.pipe-node p { font-size: 0.95rem; color: var(--muted); line-height: 1.5; }
+.pipe-node p { font-size: 0.95rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
 .pipe-node .rmse-badge {
-  margin-top: 0.8rem;
+  margin-top: auto;
   background: var(--card2); border: 1px solid var(--border);
   border-radius: 6px; padding: 0.3rem 0.5rem;
-  font-size: 0.95rem; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
+  width: 100%;
 }
 .pipe-arrow {
   display: flex; align-items: center; justify-content: center;
