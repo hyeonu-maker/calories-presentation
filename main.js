@@ -193,16 +193,39 @@ createChartOnVisible('foldChart', {
   type:'bar',
   data:{
     labels:['Fold 1','Fold 2','Fold 3','Fold 4','Fold 5'],
-    datasets:[
-      {label:'Train',data:[4,4,4,4,4],backgroundColor:'rgba(59,158,255,0.5)',borderColor:COLORS.blue,borderWidth:1,borderRadius:4},
-      {label:'Validation (OOF)',data:[1,1,1,1,1],backgroundColor:'rgba(255,140,66,0.7)',borderColor:COLORS.orange,borderWidth:1,borderRadius:4}
-    ]
+    datasets: Array.from({length: 5}, (_, i) => ({
+      label: `Partition ${i+1}`,
+      data: [1, 1, 1, 1, 1],
+      backgroundColor: [0, 1, 2, 3, 4].map(foldIdx => 
+        foldIdx === i ? 'rgba(255,140,66,0.8)' : 'rgba(59,158,255,0.5)'
+      ),
+      borderColor: [0, 1, 2, 3, 4].map(foldIdx => 
+        foldIdx === i ? COLORS.orange : COLORS.blue
+      ),
+      borderWidth: 1,
+      borderRadius: 4
+    }))
   },
   options:{
     indexAxis:'y',
-    plugins:{legend:{position:'top',labels:{font:{size:11, weight:'bold'},boxWidth:12,padding:12}}},
+    plugins:{
+      legend:{ display: false }, // 파티션별 범례는 숨김 (복잡함 방지)
+      tooltip:{
+        callbacks: {
+          label: (ctx) => {
+            const isValid = ctx.datasetIndex === ctx.dataIndex;
+            return isValid ? 'Validation (OOF)' : 'Train Data';
+          }
+        }
+      }
+    },
     scales:{
-      x:{stacked:true,grid:{color:'rgba(30,45,69,0.6)'},ticks:{font:{size:11, weight:'bold'}},title:{display:true,text:'파티션 수',color:COLORS.muted, font:{size:12, weight:'bold'}}},
+      x:{
+        stacked:true,
+        grid:{color:'rgba(30,45,69,0.6)'},
+        ticks:{ display: false },
+        title:{display:true,text:'데이터 파티션 (Train vs Validation)',color:COLORS.muted, font:{size:12, weight:'bold'}}
+      },
       y:{stacked:true,grid:{display:false},ticks:{font:{size:11, weight:'bold'}}}
     },
     animation:{duration:1200}
