@@ -14,12 +14,20 @@ function createChartOnVisible(canvasId, config) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
-  // Ensure responsive settings for all charts
+  // Configuration for better mobile view
   if (!config.options) config.options = {};
   config.options.responsive = true;
-  config.options.maintainAspectRatio = false;
+  
+  // Adjust aspect ratio based on screen width
+  const isMobile = window.innerWidth <= 768;
+  config.options.maintainAspectRatio = true;
+  config.options.aspectRatio = isMobile ? 1.2 : 2; 
+  
+  // Specific tweaks for donut/pie charts to be more circular
+  if (config.type === 'doughnut') {
+    config.options.aspectRatio = isMobile ? 1.1 : 1.5;
+  }
 
-  // Threshold lowered to 0.05 for better mobile detection
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
